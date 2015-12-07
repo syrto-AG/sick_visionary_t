@@ -240,7 +240,6 @@ private:
             ROS_WARN("malformed data (1): %d<14", (int)size);
             return;
         }
-        
         const size_t numBytesDistance   = (numBytesPerDistanceValue_ > 0) ? distance_.total()*numBytesPerDistanceValue_ : 0;
         const size_t numBytesIntensity  = (numBytesPerIntensityValue_ > 0) ? intensity_.total()*numBytesPerIntensityValue_ : 0;
         const size_t numBytesConfidence = (numBytesPerConfidenceValue_ > 0) ? confidence_.total()*numBytesPerConfidenceValue_ : 0;
@@ -253,7 +252,7 @@ private:
         const uint16_t version = __Swap2Bytes( *(uint16_t*)(data+offset+12) );
 
         offset += 14; //calcsize('>IQH')
-                                       
+
         if(length>size) {
             ROS_WARN("malformed data (2): %d>%d", (int)length, (int)size);
             return;
@@ -274,7 +273,7 @@ private:
         //distance = wholeBinary[0:numBytesDistance] // only the distance
                                                    // data (as string)
 
-        ROS_ASSERT(end<=size);    
+        ROS_ASSERT(end<=size);
 
         if (numBytesDistance > 0) {
             for(size_t i=0; i<distance_.total(); i++)
@@ -305,8 +304,8 @@ private:
         const uint32_t unusedCrc = __Swap4Bytes( *(uint32_t*)(data+offset) );
         const uint32_t lengthCopy = __Swap4Bytes( *(uint32_t*)(data+offset + 4) );
 
-		if(length != lengthCopy)
-			ROS_WARN("check failed %d!=%d", (int)length, (int)lengthCopy);
+        if(length != lengthCopy)
+            ROS_WARN("check failed %d!=%d", (int)length, (int)lengthCopy);
         ROS_ASSERT(length == lengthCopy);
     }
 
