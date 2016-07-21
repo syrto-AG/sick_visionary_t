@@ -126,6 +126,9 @@ public:
         ROS_ASSERT( protocolVersion == 1 );
         ROS_ASSERT( packetType == 98 );
         
+        if( magicword != 0x02020202 || protocolVersion != 1 || packetType != 98 )
+			return false;
+        
         // next four bytes an id (should equal 1) and
         // the number of segments (should be 3)       
 		const uint16_t id = ntohs( *(uint16_t*)(data+11) );
