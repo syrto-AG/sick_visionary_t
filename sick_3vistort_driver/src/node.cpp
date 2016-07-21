@@ -71,7 +71,30 @@ ros::Publisher g_pub_camera_info, g_pub_points, g_pub_ios;
 Driver_3DCS::Control *g_control = NULL;
 std::string g_frame_id;
 
+boost::mutex g_mtx_data;
+Driver_3DCS::Data g_data;
+
+void publish_frame(const Driver_3DCS::Data &data);
+
+void thr_publish_frame() {
+	g_mtx_data.lock();
+	publish_frame(g_data);
+	g_mtx_data.unlock();
+}
+
 void on_frame(const Driver_3DCS::Data &data) {
+	//update data in queue and
+	//detach publishing data from network thread
+	
+	if(g_mtx_data.try_lock()) {
+		g_data = data;
+		g_mtx_data.unlock();
+		
+		boost::thread thr(thr_publish_frame);
+	}
+}
+
+void publish_frame(const Driver_3DCS::Data &data) {
 	bool published_anything = false;
 	
 	sensor_msgs::ImagePtr msg;
