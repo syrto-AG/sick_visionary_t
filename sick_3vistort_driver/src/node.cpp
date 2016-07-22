@@ -93,7 +93,7 @@ void on_frame(const Driver_3DCS::Data &data) {
 		boost::thread thr(thr_publish_frame);
 	}
 	else
-		ROS_DEBUG("skipping frame");
+		ROS_WARN("skipping frame");
 }
 
 void publish_frame(const Driver_3DCS::Data &data) {
