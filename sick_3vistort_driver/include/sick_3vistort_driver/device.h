@@ -164,7 +164,6 @@ class Streaming : public TCP_Session {
 public:
 
 	struct SFrame {
-        uint32_t pkglength;
 		std::vector<char> buffer;
 		
 		typedef boost::shared_ptr<SFrame> Ptr;
@@ -229,7 +228,6 @@ public:
 	{
         if(debugOutput_)
             ROS_DEBUG("Reading image from stream...");
-        bool keep_running = true;
         
         if(!data || size<0) {
             ROS_DEBUG("Socket not connected, terminating.");
@@ -237,55 +235,31 @@ public:
 		}
             
         if(cur_frame_) {
-			const size_t actual_size = std::min(size, cur_frame_->pkglength+9-cur_frame_->buffer.size());
-			cur_frame_->buffer.insert(cur_frame_->buffer.end(), data, data+actual_size );
-			
-			if(cur_frame_->buffer.size()>=cur_frame_->pkglength+9) {				
-				Data parser;
-				if(parser.read(&cur_frame_->buffer[0], cur_frame_->buffer.size()))
-					on_frame_(parser);
-				else
-					ROS_ERROR("failed to parse frame");
-				cur_frame_.reset();
-				
-				if(size>actual_size)
-					on_data(data+actual_size, size-actual_size, writer);
+			cur_frame_->buffer.insert(cur_frame_->buffer.end(), data, data+size );
+
+			bool goon=true;
+			while(goon) {
+				goon=false;
+
+				if(Data::check_header(&cur_frame_->buffer[0], cur_frame_->buffer.size())) {				
+					Data parser;
+					const size_t actual_size = parser.actual_size(&cur_frame_->buffer[0], cur_frame_->buffer.size());
+					if(parser.read(&cur_frame_->buffer[0], actual_size)) {
+						on_frame_(parser);
+						goon=true;
+					}
+					else {
+						cur_frame_.reset();
+						ROS_ERROR("failed to parse frame");
+						break;
+					}
+
+					cur_frame_->buffer.erase(cur_frame_->buffer.begin(), cur_frame_->buffer.begin()+actual_size);
+				}
 			}
 		}
 		else {
-			
-			// check if the buffer length is as expected
-			if(size<11) {
-				ROS_DEBUG("Uh, not enough bytes, only %d", (int)size);
-				return;
-			}
-			
-			// check if the buffer content is as expected
-			uint32_t magicword = ntohl( *(uint32_t*)(data+0) );
-			uint32_t pkglength = ntohl( *(uint32_t*)(data+4) );
-			uint16_t protocolVersion = ntohs( *(uint16_t*)(data+8) );
-			uint8_t packetType = *(uint8_t*)(data+10);
-			
-			if(magicword != 0x02020202) {
-				ROS_DEBUG("Unknown magic word: %0x", magicword);
-				keep_running = false;
-			}
-			if(protocolVersion != 0x0001) {
-				ROS_DEBUG("Unknown protocol version: %0x", protocolVersion);
-				keep_running = false;
-			}
-			if(packetType != 0x62) {
-				ROS_DEBUG("Unknown packet type: %0x", packetType);
-				keep_running = false;
-			}
-			
-			// something is wrong with the buffer
-			if(!keep_running)
-				return;
-			
 			cur_frame_.reset(new SFrame());
-			cur_frame_->pkglength = pkglength;
-			
 			on_data(data, size, writer);
 		}
 			   
