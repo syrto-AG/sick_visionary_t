@@ -182,7 +182,7 @@ void publish_frame(const Driver_3DCS::Data &data) {
 		for (size_t d = 0; d < cloud_msg->fields.size (); ++d, offset += 4)
 		{
 			cloud_msg->fields[d].offset = offset;
-			cloud_msg->fields[d].datatype = (d<3) ? (sensor_msgs::PointField::FLOAT32) : (sensor_msgs::PointField::UINT16);
+			cloud_msg->fields[d].datatype = (d<3) ? int(sensor_msgs::PointField::FLOAT32) : int(sensor_msgs::PointField::UINT16);
 			cloud_msg->fields[d].count  = 1;
 		}
 		cloud_msg->point_step = offset;
