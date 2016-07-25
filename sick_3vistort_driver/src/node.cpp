@@ -70,6 +70,8 @@ image_transport::Publisher g_pub_depth, g_pub_confidence, g_pub_intensity;
 ros::Publisher g_pub_camera_info, g_pub_points, g_pub_ios;
 Driver_3DCS::Control *g_control = NULL;
 std::string g_frame_id;
+/// If true: prevents skipping of frames and publish everything, otherwise use newest data to publish to ROS world
+bool g_publish_all = false;
 
 boost::mutex g_mtx_data;
 boost::shared_ptr<Driver_3DCS::Data> g_data;
@@ -86,7 +88,9 @@ void on_frame(const boost::shared_ptr<Driver_3DCS::Data> &data) {
 	//update data in queue and
 	//detach publishing data from network thread
 	
-	if(g_mtx_data.try_lock()) {
+	if(g_publish_all || g_mtx_data.try_lock()) {
+		if(g_publish_all)
+			g_mtx_data.lock();
 		g_data = data;
 		g_mtx_data.unlock();
 		
@@ -271,6 +275,7 @@ int main(int argc, char **argv) {
 	
 	ros::param::get("~remote_device_ip", remote_device_ip);
 	ros::param::get("~frame_id", g_frame_id);
+	ros::param::get("~prevent_frame_skipping", g_publish_all);
 	
 	Driver_3DCS::Control control(io_service, remote_device_ip);
 	r=control.open();
