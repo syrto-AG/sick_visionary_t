@@ -72,17 +72,17 @@ Driver_3DCS::Control *g_control = NULL;
 std::string g_frame_id;
 
 boost::mutex g_mtx_data;
-Driver_3DCS::Data g_data;
+boost::shared_ptr<Driver_3DCS::Data> g_data;
 
 void publish_frame(const Driver_3DCS::Data &data);
 
 void thr_publish_frame() {
 	g_mtx_data.lock();
-	publish_frame(g_data);
+	publish_frame(*g_data);
 	g_mtx_data.unlock();
 }
 
-void on_frame(const Driver_3DCS::Data &data) {
+void on_frame(const boost::shared_ptr<Driver_3DCS::Data> &data) {
 	//update data in queue and
 	//detach publishing data from network thread
 	

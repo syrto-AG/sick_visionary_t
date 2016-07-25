@@ -169,7 +169,7 @@ public:
 		typedef boost::shared_ptr<SFrame> Ptr;
 	};
 	
-	typedef boost::signals2::signal<void (const Data &)> SIG_ON_FRAME;
+	typedef boost::signals2::signal<void (const boost::shared_ptr<Data> &)> SIG_ON_FRAME;
 	
 private:
 	const std::string remote_device_ip_;
@@ -242,9 +242,9 @@ public:
 				goon=false;
 
 				if(Data::check_header(&cur_frame_->buffer[0], cur_frame_->buffer.size())) {				
-					Data parser;
-					const size_t actual_size = parser.actual_size(&cur_frame_->buffer[0], cur_frame_->buffer.size());
-					if(parser.read(&cur_frame_->buffer[0], actual_size)) {
+					boost::shared_ptr<Data> parser(new Data);
+					const size_t actual_size = parser->actual_size(&cur_frame_->buffer[0], cur_frame_->buffer.size());
+					if(parser->read(&cur_frame_->buffer[0], actual_size)) {
 						on_frame_(parser);
 						goon=true;
 					}
