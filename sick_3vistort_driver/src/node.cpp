@@ -70,8 +70,37 @@ image_transport::Publisher g_pub_depth, g_pub_confidence, g_pub_intensity;
 ros::Publisher g_pub_camera_info, g_pub_points, g_pub_ios;
 Driver_3DCS::Control *g_control = NULL;
 std::string g_frame_id;
+/// If true: prevents skipping of frames and publish everything, otherwise use newest data to publish to ROS world
+bool g_publish_all = false;
 
-void on_frame(const Driver_3DCS::Data &data) {
+boost::mutex g_mtx_data;
+boost::shared_ptr<Driver_3DCS::Data> g_data;
+
+void publish_frame(const Driver_3DCS::Data &data);
+
+void thr_publish_frame() {
+	g_mtx_data.lock();
+	publish_frame(*g_data);
+	g_mtx_data.unlock();
+}
+
+void on_frame(const boost::shared_ptr<Driver_3DCS::Data> &data) {
+	//update data in queue and
+	//detach publishing data from network thread
+	
+	if(g_publish_all || g_mtx_data.try_lock()) {
+		if(g_publish_all)
+			g_mtx_data.lock();
+		g_data = data;
+		g_mtx_data.unlock();
+		
+		boost::thread thr(thr_publish_frame);
+	}
+	else
+		ROS_WARN("skipping frame");
+}
+
+void publish_frame(const Driver_3DCS::Data &data) {
 	bool published_anything = false;
 	
 	sensor_msgs::ImagePtr msg;
@@ -153,7 +182,7 @@ void on_frame(const Driver_3DCS::Data &data) {
 		for (size_t d = 0; d < cloud_msg->fields.size (); ++d, offset += 4)
 		{
 			cloud_msg->fields[d].offset = offset;
-			cloud_msg->fields[d].datatype = (d<3) ? (sensor_msgs::PointField::FLOAT32) : (sensor_msgs::PointField::UINT16);
+			cloud_msg->fields[d].datatype = (d<3) ? int(sensor_msgs::PointField::FLOAT32) : int(sensor_msgs::PointField::UINT16);
 			cloud_msg->fields[d].count  = 1;
 		}
 		cloud_msg->point_step = offset;
@@ -246,6 +275,7 @@ int main(int argc, char **argv) {
 	
 	ros::param::get("~remote_device_ip", remote_device_ip);
 	ros::param::get("~frame_id", g_frame_id);
+	ros::param::get("~prevent_frame_skipping", g_publish_all);
 	
 	Driver_3DCS::Control control(io_service, remote_device_ip);
 	r=control.open();
