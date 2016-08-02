@@ -2,8 +2,8 @@
 Changelog for package sick_3vistort_driver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.1 (2016-08-02)
+------------------
 * fixed warning
 * added parameter:prevent_frame_skipping
   f true: prevents skipping of frames and publish everything, otherwise use newest data to publish to ROS world
