@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>sick_3vistort_driver</name>
-  <version>0.0.0</version>
+  <version>0.0.1</version>
   <description>Open source driver for the SICK 3vistor-T 3d TOF camera.</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
