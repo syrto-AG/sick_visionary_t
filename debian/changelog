@@ -1,0 +1,27 @@
+ros-indigo-sick-visionary-t-driver (0.0.2-0trusty) trusty; urgency=high
+
+  * rename to visionary_t
+  * Contributors: Florian Weisshardt
+
+ -- Joshua Hampp <joshua.hampp@ipa.fraunhofer.de>  Thu, 06 Oct 2016 22:00:00 -0000
+
+ros-indigo-sick-visionary-t-driver (0.0.1-0trusty) trusty; urgency=high
+
+  * fixed warning
+  * added parameter:prevent_frame_skipping
+    f true: prevents skipping of frames and publish everything, otherwise use newest data to publish to ROS world
+  * using pointer instead of copy constructor (optimization)
+  * warning instead of debug msg
+  * fixed receive queue
+  * added functions to check header + size before parsing
+  * debug messaging
+  * check data header
+  * detach publishing data from network thread
+  * Renamed launch file to match the driver name
+  * Updated formatting and adding parameter comment in launch file.
+  * initial version of sick_3vistort ROS driver
+  * Contributors: Florian Weisshardt, Joshua Hampp, Marco Dierschke
+
+ -- Joshua Hampp <joshua.hampp@ipa.fraunhofer.de>  Mon, 01 Aug 2016 22:00:00 -0000
+
+
