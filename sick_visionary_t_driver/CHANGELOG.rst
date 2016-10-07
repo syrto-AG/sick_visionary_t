@@ -2,6 +2,11 @@
 Changelog for package sick_3vistort_driver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* rename to visionary_t
+* Contributors: Florian Weisshardt
+
 0.0.1 (2016-08-02)
 ------------------
 * fixed warning
