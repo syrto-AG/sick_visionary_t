@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(sick_3vistort_driver)
+project(sick_visionary_t_driver)
 
 find_package(catkin REQUIRED COMPONENTS
   cv_bridge
@@ -22,9 +22,9 @@ include_directories(
   include
 )
 
-add_executable(sick_3vistort_driver_node src/node.cpp src/driver.cpp)
+add_executable(sick_visionary_t_driver_node src/node.cpp src/driver.cpp)
 
-target_link_libraries(sick_3vistort_driver_node
+target_link_libraries(sick_visionary_t_driver_node
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
 )
@@ -35,7 +35,7 @@ if(CATKIN_ENABLE_TESTING)
 endif()
 
 ### INSTALL ###
-install(TARGETS sick_3vistort_driver_node
+install(TARGETS sick_visionary_t_driver_node
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
