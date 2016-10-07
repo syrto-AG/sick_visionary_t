@@ -1,0 +1,12 @@
+Source: ros-indigo-sick-visionary-t-driver
+Section: misc
+Priority: extra
+Maintainer: Joshua Hampp <joshua.hampp@ipa.fraunhofer.de>
+Build-Depends: debhelper (>= 9.0.0), ros-indigo-catkin, ros-indigo-cv-bridge, ros-indigo-image-transport, ros-indigo-roscpp, ros-indigo-roslaunch, ros-indigo-sensor-msgs
+Homepage: http://wiki.ros.org/sick_visionary_t_driver
+Standards-Version: 3.9.2
+
+Package: ros-indigo-sick-visionary-t-driver
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-indigo-cv-bridge, ros-indigo-image-transport, ros-indigo-roscpp, ros-indigo-roslaunch, ros-indigo-sensor-msgs
+Description: Open source driver for the SICK 3vistor-T 3d TOF camera.
