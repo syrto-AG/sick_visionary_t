@@ -3,14 +3,14 @@
  * \file
  *
  * \note
- *   Copyright (c) TODO FILL IN YEAR HERE \n
+ *   Copyright (c) 2015 \n
  *   Fraunhofer Institute for Manufacturing Engineering
  *   and Automation (IPA) \n\n
  *
  *****************************************************************
  *
  * \note
- *   ROS package name: sick_3vistort_driver
+ *   ROS package name: sick_visionary_t_driver
  *
  * \author
  *   Author: Joshua Hampp
