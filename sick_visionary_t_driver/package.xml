@@ -2,7 +2,7 @@
 <package format="2">
   <name>sick_visionary_t_driver</name>
   <version>0.0.2</version>
-  <description>Open source driver for the SICK 3vistor-T 3d TOF camera.</description>
+  <description>Open source driver for the SICK Visionary-T 3D TOF camera.</description>
 
   <license>Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)</license>
 
