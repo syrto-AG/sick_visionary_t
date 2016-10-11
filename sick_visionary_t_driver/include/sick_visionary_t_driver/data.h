@@ -3,14 +3,14 @@
  * \file
  *
  * \note
- *   Copyright (c) TODO FILL IN YEAR HERE \n
+ *   Copyright (c) 2015 \n
  *   Fraunhofer Institute for Manufacturing Engineering
  *   and Automation (IPA) \n\n
  *
  *****************************************************************
  *
  * \note
- *   ROS package name: sick_3vistort_driver
+ *   ROS package name: sick_visionary_t_driver
  *
  * \author
  *   Author: Joshua Hampp
@@ -114,6 +114,25 @@ public:
     
     const CameraParameters &getCameraParameters() const {return cameraParams_;}
 
+    /* Get size of complete package. */
+    static size_t actual_size(const char *data, const size_t size) {
+	if(size<8) return 0;
+        // first 11 bytes contain some internal definitions   
+	const uint32_t pkglength = ntohl( *(uint32_t*)(data+4) );
+
+	return pkglength+9;
+    }
+
+    /* Check if there are enough data to be parsed. */
+    static bool check_header(const char *data, const size_t size) {
+	if(size<11) return false;
+
+	const uint32_t magicword = ntohl( *(uint32_t*)(data+0) );
+
+	//if magic word in invalid we'll read the content anyway to skip data
+	return magicword != 0x02020202 || size>=actual_size(data, size);
+    }
+
     /* Extracts necessary data segments and triggers parsing of segments. */
     bool read(const char *data, const size_t size) {
         // first 11 bytes contain some internal definitions   
@@ -125,6 +144,9 @@ public:
         ROS_ASSERT( magicword == 0x02020202 );
         ROS_ASSERT( protocolVersion == 1 );
         ROS_ASSERT( packetType == 98 );
+        
+        if( magicword != 0x02020202 || protocolVersion != 1 || packetType != 98 )
+			return false;
         
         // next four bytes an id (should equal 1) and
         // the number of segments (should be 3)       
