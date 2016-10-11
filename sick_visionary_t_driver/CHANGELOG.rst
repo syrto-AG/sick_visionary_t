@@ -1,6 +1,6 @@
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Changelog for package sick_3vistort_driver
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Changelog for package sick_visionary_t_driver
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 0.0.2 (2016-10-07)
 ------------------
@@ -21,5 +21,5 @@ Changelog for package sick_3vistort_driver
 * detach publishing data from network thread
 * Renamed launch file to match the driver name
 * Updated formatting and adding parameter comment in launch file.
-* initial version of sick_3vistort ROS driver
+* initial version of sick_visionary_t_driver ROS driver
 * Contributors: Florian Weisshardt, Joshua Hampp, Marco Dierschke
