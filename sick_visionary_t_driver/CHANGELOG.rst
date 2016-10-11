@@ -2,8 +2,8 @@
 Changelog for package sick_visionary_t_driver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.3 (2016-10-11)
+------------------
 * rename to visionary in changelog
 * rename to visionary
 * Contributors: Florian Weisshardt, Marco Dierschke
