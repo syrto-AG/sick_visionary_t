@@ -7,6 +7,10 @@
  *   Fraunhofer Institute for Manufacturing Engineering
  *   and Automation (IPA) \n\n
  *
+ * \note
+ *   Copyright (c) 2015 \n
+ *   SICK AG \n\n
+ *
  *****************************************************************
  *
  * \note
