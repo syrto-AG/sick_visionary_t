@@ -9,6 +9,7 @@
   <url type="website">http://wiki.ros.org/sick_visionary_t_driver</url>
 
   <maintainer email="joshua.hampp@ipa.fraunhofer.de">Joshua Hampp</maintainer>
+  <maintainer email="marco.dierschke@sick.de">Marco Dierschke</maintainer>
   <author email="joshua.hampp@ipa.fraunhofer.de">Joshua Hampp</author>
 
   <buildtool_depend>catkin</buildtool_depend>
