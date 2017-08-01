@@ -2,6 +2,9 @@
 Changelog for package sick_visionary_t_driver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.4 (2017-08-01)
 ------------------
 * Merge branch 'indigo-devel' into indigo_release_candidate
