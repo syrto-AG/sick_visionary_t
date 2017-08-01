@@ -8,12 +8,12 @@
   </description>
 
   <version>0.0.4</version>
-  <license>LGPL</license>
+  <license>Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)</license>
 
   <maintainer email="joshua.hampp@ipa.fraunhofer.de">Joshua Hampp</maintainer>
   <maintainer email="marco.dierschke@sick.de">Marco Dierschke</maintainer>
   
-  <url>http://wiki.ros.org/sick_visionary_t_driver</url>
+  <url>http://wiki.ros.org/sick_visionary_t</url>
   
   <buildtool_depend>catkin</buildtool_depend>
 
