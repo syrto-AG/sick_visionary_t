@@ -285,8 +285,11 @@ private:
         ROS_ASSERT(end<=size);
 
         if (numBytesDistance > 0) {
-            for(size_t i=0; i<distance_.total(); i++)
-                distance_.at<uint16_t>(i) = __Swap2BytesD( *(uint16_t*)(data+offset+i*2) );
+            // for(size_t i=0; i<distance_.total(); i++){
+            //     ROS_INFO_STREAM("DIST AVAN "<< distance_.at<uint16_t>(i));
+            //     distance_.at<uint16_t>(i) = __Swap2BytesD( *(uint16_t*)(data+offset+i*2) );
+            //     ROS_INFO_STREAM("DIST AP "<<distance_.at<uint16_t>(i));
+            // }
             offset += numBytesDistance;
         }
         else {
